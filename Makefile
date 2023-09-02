@@ -4,7 +4,6 @@
 d-homework-i-run:
 	@bash ./scripts/d-homework-i-run.sh
 
-
 .PHONY: d-homework-i-purge
 # Make all actions needed for purge homework related data.
 d-homework-i-purge:
@@ -14,7 +13,8 @@ d-homework-i-purge:
 .PHONY: init-configs
 # Configuration files initialization
 init-configs:
-	@cp docker-compose.override.dev.yml docker-compose.override.yml
+	@cp .env.homework .env &&\
+	cp docker-compose.override.dev.yml docker-compose.override.yml
 
 
 .PHONY: d-run
@@ -46,7 +46,7 @@ init-dev:
 .PHONY: homework-i-run
 # Run homework.
 homework-i-run:
-	@python run.py
+	@python manage.py runserver 0.0.0.0:8000
 
 .PHONY: homework-i-purge
 homework-i-purge:
@@ -74,7 +74,7 @@ migrations:
 migrate:
 	@python manage.py migrate
 
-.PHONY: create_admin
+.PHONY: create-admin
 # Create admin
-create_admin:
-	@DJANGO_SUPERUSER_PASSWORD=admin123 python manage.py createsuperuser --user admin --email admin@gmail.com --no-input
+create-admin:
+	@python manage.py create_admin
